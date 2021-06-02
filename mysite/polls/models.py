@@ -1,5 +1,6 @@
 from datetime import timedelta
 
+from django.contrib import admin
 from django.db import models
 from django.utils import timezone
 
@@ -12,6 +13,7 @@ class Question(models.Model):
     def __str__(self):
         return self.question_text
 
+    @admin.display(boolean=True, ordering="pub_date", description="Published Recently?")
     def was_published_recently(self):
         now = timezone.now()
         return now - timedelta(days=1) <= self.pub_date <= now
